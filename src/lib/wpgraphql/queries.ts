@@ -32,8 +32,8 @@ export const ALL_POSTS = /* GraphQL */ `
 `;
 
 export const POST_BY_SLUG = /* GraphQL */ `
-  query PostBySlug($slug: ID!) {
-    post(id: $slug, idType: SLUG) {
+  query PostBySlug($id: ID!) {
+    post(id: $id, idType: SLUG) {
       id
       slug
       title

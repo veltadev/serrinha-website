@@ -35,7 +35,7 @@ export async function getAllPosts(): Promise<WpPost[]> {
 export async function getPostBySlug(slug: string): Promise<WpPost | null> {
   const data = await fetchGraphQL<PostBySlugResponse>({
     query: POST_BY_SLUG,
-    variables: { slug },
+    variables: { id: slug },
     revalidate: DEFAULT_REVALIDATE,
   });
 
