@@ -1,3 +1,56 @@
+## Serrinha Website
+
+Next.js (App Router) frontend for `serrinha.pt`, backed by a headless WordPress instance at `https://cms.serrinha.pt/graphql`.
+
+### Stack
+
+- Next.js (App Router, TypeScript)
+- Tailwind CSS
+- ESLint
+- Headless WordPress via WPGraphQL
+- No database
+
+### Getting started
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Configure environment:
+
+   Create `.env.local` (already created here, but you can adjust if needed):
+
+   ```bash
+   WORDPRESS_GRAPHQL_ENDPOINT="https://cms.serrinha.pt/graphql"
+   ```
+
+3. Run the dev server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Then open `http://localhost:3000`.
+
+The app will fetch real content from WordPress (pages by path and posts for the blog) and uses ISR (`revalidate = 60`) for all WP-backed routes.
+
+### Deployment (Vercel)
+
+1. Push this `serrinha` folder as a Git repository to GitHub/GitLab.
+2. In Vercel, import the project.
+3. Set the environment variable:
+
+   - `WORDPRESS_GRAPHQL_ENDPOINT=https://cms.serrinha.pt/graphql`
+
+4. Use the default Next.js build settings:
+
+   - Build command: `npm run build`
+   - Output directory: `.next`
+
+Vercel will handle ISR and caching automatically.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

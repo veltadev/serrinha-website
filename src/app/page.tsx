@@ -1,65 +1,151 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import { Prose } from "@/components/Prose";
+import { HeroSection } from "@/components/HeroSection";
+import { Section } from "@/components/Section";
+import { Card } from "@/components/Card";
+import { Button } from "@/components/Button";
+import { getAllPosts, getPageByPath } from "@/lib/wpgraphql/api";
+import { buildMetadataFromContent } from "@/lib/seo";
 
-export default function Home() {
+const PATH = "/";
+
+export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageByPath(PATH);
+
+  if (!page) {
+    return buildMetadataFromContent({
+      title: "Serrinha",
+      description:
+        "Serrinha is a regenerative farm and nature retreat, cultivating biodiversity, food, and community.",
+    });
+  }
+
+  return buildMetadataFromContent({
+    title: page.title || "Home",
+    description:
+      "Serrinha is a regenerative farm and nature retreat, cultivating biodiversity, food, and community.",
+    html: page.content ?? undefined,
+  });
+}
+
+export default async function HomePage() {
+  const [page, posts] = await Promise.all([
+    getPageByPath(PATH),
+    getAllPosts(),
+  ]);
+
+  const latestPosts = posts.slice(0, 3);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <HeroSection
+        title="Regenerating Land. Restoring Balance."
+        subtitle="Serrinha is a regenerative farm and nature retreat, tending soil, water and community with care."
+        primaryCtaLabel="Visit the farm"
+        primaryCtaHref="/visit"
+        secondaryCtaLabel="Our regenerative practices"
+        secondaryCtaHref="/regenerative"
+      />
+
+      <Section eyebrow="What guides us" title="Rooted in living systems">
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="space-y-2">
+            <h3 className="font-serif text-lg font-semibold text-ink">
+              Soil
+            </h3>
+            <p className="text-sm text-muted">
+              Building living soils through cover crops, compost, and gentle
+              disturbance so fertility can regenerate year after year.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-serif text-lg font-semibold text-ink">
+              Biodiversity
+            </h3>
+            <p className="text-sm text-muted">
+              Planting diverse species and habitat corridors that invite
+              pollinators, birds, and wild allies back to the landscape.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-serif text-lg font-semibold text-ink">
+              Community
+            </h3>
+            <p className="text-sm text-muted">
+              Hosting gatherings, learning, and slow stays where people can
+              reconnect with land, food, and each other.
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </Section>
+
+      {page && (
+        <Section>
+          <Prose html={page.content} />
+        </Section>
+      )}
+
+      <Section eyebrow="From the farm" title="Latest stories">
+        {latestPosts.length === 0 ? (
+          <p className="text-sm text-muted">No stories published yet.</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-3">
+            {latestPosts.map((post) => {
+              const date =
+                post.date &&
+                new Date(post.date).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                });
+
+              const image = post.featuredImage?.node?.sourceUrl ?? null;
+
+              const excerptText =
+                typeof post.excerpt === "string"
+                  ? post.excerpt.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+                  : "";
+
+              const truncatedExcerpt =
+                excerptText.length > 140
+                  ? `${excerptText.slice(0, 140)}…`
+                  : excerptText;
+
+              return (
+                <Card key={post.id} className="overflow-hidden">
+                  <article className="flex h-full flex-col gap-3">
+                    {image && (
+                      <div className="-mx-6 -mt-6 mb-4 h-40 overflow-hidden">
+                        <div
+                          className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                          style={{ backgroundImage: `url(${image})` }}
+                        />
+                      </div>
+                    )}
+                    <p className="text-xs uppercase tracking-[0.2em] text-muted">
+                      {date}
+                    </p>
+                    <h3 className="font-serif text-lg font-semibold text-ink">
+                      {post.title}
+                    </h3>
+                    {truncatedExcerpt && (
+                      <p className="text-sm text-muted">{truncatedExcerpt}</p>
+                    )}
+                    <div className="mt-auto pt-2">
+                      <Button href={`/blog/${post.slug}`} variant="ghost">
+                        Read story
+                      </Button>
+                    </div>
+                  </article>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </Section>
+    </>
   );
 }
+
