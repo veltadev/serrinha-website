@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Container } from "./Container";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/regenerative", label: "Regenerative" },
+  { href: "/about", label: "About" },
   { href: "/products", label: "Products" },
   { href: "/visit", label: "Visit" },
   { href: "/blog", label: "Blog" },
@@ -18,21 +19,29 @@ export function Header() {
   const isHome = pathname === "/";
 
   const base =
-    "sticky top-0 z-40 border-b transition-colors duration-300 backdrop-blur";
+    "sticky top-0 z-40 border-b border-[#D8D2C8] transition-colors duration-300 backdrop-blur";
   const variant = isHome
     ? "border-transparent bg-gradient-to-b from-black/40 to-transparent text-sand"
-    : "border-olive/10 bg-sand/95 text-ink/90 shadow-sm";
+    : "bg-sand/95 text-ink/90 shadow-sm";
 
   return (
     <header className={`${base} ${variant}`}>
-      <Container className="flex items-center justify-between gap-4 py-4">
+      <Container className="flex items-center justify-between gap-4 px-2 py-1 md:py-2">
         <Link
           href="/"
-          className="text-lg font-serif tracking-tight text-current transition-opacity hover:opacity-80"
+          className="flex shrink-0 transition-opacity hover:opacity-85"
+          aria-label="Serrinha home"
         >
-          Serrinha
+        <Image
+          src="/brand/logo_green_white.svg"
+          alt="Serrinha"
+          width={800}
+          height={300}
+          priority
+          className="h-[168px] w-auto md:h-[192px]"
+        />
         </Link>
-        <nav className="hidden gap-6 text-sm sm:flex">
+        <nav className="hidden items-center gap-6 text-sm font-medium sm:flex md:text-base">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -59,4 +68,3 @@ export function Header() {
     </header>
   );
 }
-

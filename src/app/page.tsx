@@ -46,7 +46,7 @@ export default async function HomePage() {
         primaryCtaLabel="Visit the farm"
         primaryCtaHref="/visit"
         secondaryCtaLabel="Our regenerative practices"
-        secondaryCtaHref="/regenerative"
+        secondaryCtaHref="/about"
       />
 
       <Section eyebrow="What guides us" title="Rooted in living systems">
