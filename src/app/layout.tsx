@@ -22,9 +22,6 @@ export const metadata: Metadata = {
   description:
     "Serrinha is a regenerative farm and nature retreat, cultivating biodiversity, food, and community in harmony with the land.",
   metadataBase: new URL("https://serrinha.pt"),
-  icons: {
-    icon: "/brand/mark_green_white.svg",
-  },
   openGraph: {
     title: "Serrinha – Regenerative Farm & Retreat",
     description:
