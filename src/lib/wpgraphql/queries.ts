@@ -59,3 +59,46 @@ export const ALL_POST_SLUGS = /* GraphQL */ `
   }
 `;
 
+export const ALL_PRODUCTS = /* GraphQL */ `
+  query AllProducts {
+    products(first: 20, where: { status: PUBLISH }) {
+      nodes {
+        id
+        slug
+        title
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const PRODUCT_BY_SLUG = /* GraphQL */ `
+  query ProductBySlug($id: ID!) {
+    product(id: $id, idType: SLUG) {
+      id
+      slug
+      title
+      content
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+    }
+  }
+`;
+
+export const ALL_PRODUCT_SLUGS = /* GraphQL */ `
+  query AllProductSlugs {
+    products(first: 100, where: { status: PUBLISH }) {
+      nodes {
+        slug
+      }
+    }
+  }
+`;
+

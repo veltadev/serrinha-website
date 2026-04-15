@@ -31,3 +31,23 @@ export interface AllPostSlugsResponse {
   posts: { nodes: { slug: string }[] };
 }
 
+export interface WpProduct {
+  id: string;
+  slug: string;
+  title: string;
+  content: string | null;
+  featuredImage: { node: { sourceUrl: string | null } | null } | null;
+}
+
+export interface AllProductsResponse {
+  products: { nodes: WpProduct[] };
+}
+
+export interface ProductBySlugResponse {
+  product: WpProduct | null;
+}
+
+export interface AllProductSlugsResponse {
+  products: { nodes: { slug: string }[] };
+}
+
