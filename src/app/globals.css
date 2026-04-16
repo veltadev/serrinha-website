@@ -28,6 +28,73 @@ a {
   @apply underline-offset-4;
 }
 
+/* ── WordPress Gutenberg block styles ──────────────────────────────────────
+   WordPress generates HTML with its own class names for blocks. In a headless
+   setup its stylesheet never loads, so we recreate the essential rules here.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Buttons ----------------------------------------------------------------- */
+.wp-block-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.wp-block-button__link {
+  display: inline-block;
+  background-color: var(--color-olive);
+  color: #fff !important;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition: opacity 150ms ease;
+}
+
+.wp-block-button__link:hover {
+  opacity: 0.85;
+}
+
+/* Media & Text ------------------------------------------------------------ */
+.wp-block-media-text {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .wp-block-media-text {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* When the editor places the image on the right side */
+  .wp-block-media-text.has-media-on-the-right .wp-block-media-text__media {
+    order: 2;
+  }
+
+  .wp-block-media-text.has-media-on-the-right .wp-block-media-text__content {
+    order: 1;
+  }
+}
+
+.wp-block-media-text__media img,
+.wp-block-media-text__media video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+}
+
+.wp-block-media-text__content {
+  padding: 0;
+}
+
 /* Subtle motion utilities */
 @keyframes fade-in {
   from {
