@@ -37,37 +37,28 @@ export default async function ProductsPage() {
             const image = product.featuredImage?.node?.sourceUrl ?? null;
 
             return (
-              <Card
-                key={product.id}
-                className="flex h-full flex-col overflow-hidden"
-              >
-                {image && (
-                  <div className="-mx-6 -mt-6 mb-4 h-52 overflow-hidden">
-                    <div
-                      className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${image})` }}
-                    />
-                  </div>
-                )}
-                <div className="flex flex-1 flex-col gap-3">
-                  <h2 className="font-serif text-lg font-semibold text-ink">
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="hover:text-olive"
-                    >
+              <Link key={product.id} href={`/products/${product.slug}`} className="group block h-full">
+                <Card className="flex h-full flex-col overflow-hidden">
+                  {image && (
+                    <div className="-mx-6 -mt-6 mb-4 h-52 overflow-hidden">
+                      <div
+                        className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                        style={{ backgroundImage: `url(${image})` }}
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col gap-3">
+                    <h2 className="font-serif text-lg font-semibold text-ink group-hover:text-olive transition-colors">
                       {product.title}
-                    </Link>
-                  </h2>
-                  <div className="mt-auto pt-2">
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="text-sm font-medium text-olive underline-offset-4 hover:underline"
-                    >
-                      View &amp; order
-                    </Link>
+                    </h2>
+                    <div className="mt-auto pt-2">
+                      <span className="text-sm font-medium text-olive">
+                        View &amp; order
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </Link>
             );
           })}
         </div>

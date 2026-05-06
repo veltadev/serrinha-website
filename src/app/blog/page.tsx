@@ -54,40 +54,34 @@ export default async function BlogIndexPage() {
                 : excerptText;
 
             return (
-              <Card key={post.id} className="flex h-full flex-col overflow-hidden">
-                {image && (
-                  <div className="-mx-6 -mt-6 mb-4 h-40 overflow-hidden">
-                    <div
-                      className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${image})` }}
-                    />
-                  </div>
-                )}
-                <div className="flex flex-1 flex-col gap-3">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted">
-                    {date}
-                  </p>
-                  <h2 className="font-serif text-lg font-semibold text-ink">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="hover:text-olive"
-                    >
-                      {post.title}
-                    </Link>
-                  </h2>
-                  {truncatedExcerpt && (
-                    <p className="text-sm text-muted">{truncatedExcerpt}</p>
+              <Link key={post.id} href={`/blog/${post.slug}`} className="group block h-full">
+                <Card className="flex h-full flex-col overflow-hidden">
+                  {image && (
+                    <div className="-mx-6 -mt-6 mb-4 h-40 overflow-hidden">
+                      <div
+                        className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                        style={{ backgroundImage: `url(${image})` }}
+                      />
+                    </div>
                   )}
-                  <div className="mt-auto pt-2">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-sm font-medium text-olive underline-offset-4 hover:underline"
-                    >
-                      Read story
-                    </Link>
+                  <div className="flex flex-1 flex-col gap-3">
+                    <p className="text-xs uppercase tracking-[0.2em] text-muted">
+                      {date}
+                    </p>
+                    <h2 className="font-serif text-lg font-semibold text-ink group-hover:text-olive transition-colors">
+                      {post.title}
+                    </h2>
+                    {truncatedExcerpt && (
+                      <p className="text-sm text-muted">{truncatedExcerpt}</p>
+                    )}
+                    <div className="mt-auto pt-2">
+                      <span className="text-sm font-medium text-olive">
+                        Read story
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </Link>
             );
           })}
         </div>
