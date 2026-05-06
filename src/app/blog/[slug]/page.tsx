@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { Prose } from "@/components/Prose";
+import { ShareButton } from "@/components/ShareButton";
 import { getAllPostSlugs, getPostBySlug } from "@/lib/wpgraphql/api";
 import { buildMetadataFromContent } from "@/lib/seo";
 
@@ -57,6 +58,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </h1>
         </header>
         <Prose html={post.content} />
+        <div className="pt-6 border-t border-olive/10">
+          <ShareButton url={`https://serrinha.pt/blog/${post.slug}`} />
+        </div>
       </article>
     </Container>
   );

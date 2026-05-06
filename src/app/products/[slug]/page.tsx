@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Prose } from "@/components/Prose";
 import { ProductOrderForm } from "@/components/ProductOrderForm";
+import { ShareButton } from "@/components/ShareButton";
 import { getAllProductSlugs, getProductBySlug } from "@/lib/wpgraphql/api";
 import { buildMetadataFromContent } from "@/lib/seo";
 
@@ -72,6 +73,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {product.content && (
             <Prose html={product.content} />
           )}
+          <div className="pt-4">
+            <ShareButton url={`https://serrinha.pt/products/${product.slug}`} />
+          </div>
         </div>
 
         {/* Right column — order form */}
