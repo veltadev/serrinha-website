@@ -24,6 +24,7 @@ export const ALL_POSTS = /* GraphQL */ `
         featuredImage {
           node {
             sourceUrl
+            altText
           }
         }
       }
@@ -69,6 +70,7 @@ export const ALL_PRODUCTS = /* GraphQL */ `
         featuredImage {
           node {
             sourceUrl
+            altText
           }
         }
       }

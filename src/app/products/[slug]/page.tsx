@@ -38,6 +38,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) notFound();
 
   const image = product.featuredImage?.node?.sourceUrl ?? null;
+  const imageAlt = product.featuredImage?.node?.altText || product.title;
 
   return (
     <Container>
@@ -56,9 +57,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="space-y-6">
           {image && (
             <div className="aspect-square w-full overflow-hidden rounded-2xl">
-              <div
-                className="h-full w-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${image})` }}
+              <img
+                src={image}
+                alt={imageAlt}
+                className="h-full w-full object-cover"
               />
             </div>
           )}

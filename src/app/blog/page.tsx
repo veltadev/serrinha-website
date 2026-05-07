@@ -43,6 +43,7 @@ export default async function BlogIndexPage() {
               });
 
             const image = post.featuredImage?.node?.sourceUrl ?? null;
+            const imageAlt = post.featuredImage?.node?.altText || post.title;
             const excerptHtml = typeof post.excerpt === "string" ? post.excerpt : "";
             const excerptText = excerptHtml
               .replace(/<[^>]*>/g, " ")
@@ -58,9 +59,10 @@ export default async function BlogIndexPage() {
                 <Card className="flex h-full flex-col overflow-hidden">
                   {image && (
                     <div className="-mx-6 -mt-6 mb-4 h-40 overflow-hidden">
-                      <div
-                        className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                        style={{ backgroundImage: `url(${image})` }}
+                      <img
+                        src={image}
+                        alt={imageAlt}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   )}

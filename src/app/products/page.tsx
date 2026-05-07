@@ -35,15 +35,17 @@ export default async function ProductsPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => {
             const image = product.featuredImage?.node?.sourceUrl ?? null;
+            const imageAlt = product.featuredImage?.node?.altText || product.title;
 
             return (
               <Link key={product.id} href={`/products/${product.slug}`} className="group block h-full">
                 <Card className="flex h-full flex-col overflow-hidden">
                   {image && (
                     <div className="-mx-6 -mt-6 mb-4 h-52 overflow-hidden">
-                      <div
-                        className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                        style={{ backgroundImage: `url(${image})` }}
+                      <img
+                        src={image}
+                        alt={imageAlt}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   )}

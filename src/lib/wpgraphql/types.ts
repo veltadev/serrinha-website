@@ -12,7 +12,7 @@ export interface WpPost {
   content: string | null;
   excerpt: string | null;
   date: string;
-  featuredImage: { node: { sourceUrl: string | null } | null } | null;
+  featuredImage: { node: { sourceUrl: string | null; altText: string | null } | null } | null;
 }
 
 export interface PageByUriResponse {
@@ -36,7 +36,7 @@ export interface WpProduct {
   slug: string;
   title: string;
   content: string | null;
-  featuredImage: { node: { sourceUrl: string | null } | null } | null;
+  featuredImage: { node: { sourceUrl: string | null; altText: string | null } | null } | null;
 }
 
 export interface AllProductsResponse {
